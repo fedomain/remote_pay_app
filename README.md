@@ -29,4 +29,5 @@ A simple mobile app that lets anyone to use Alipay and WeChat pay in China for p
 - Add topup feature (Paypal)
 - Add a profile page
 - Add an original logo for the app
+- Allow user to see current credit
 

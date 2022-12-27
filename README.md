@@ -9,13 +9,13 @@ A simple mobile app that lets anyone to use Alipay and WeChat pay in China for p
 - Forgot Password
 - Take picture of vendor QR code
 - Submit form with picture and specify the price
-- View transaction history
+- View transaction & top up history
 - View current credit
+- Top up with Paypal, credit card
 
 ## Basic Feature (v2.0)
 
-- Top up with Paypal, credit card
-- Receive QR code for payment to vendor
+- Receive QR code for payment (for vendor to scan)
 - Record user location at each payment request
 
 ## Todos

@@ -31,5 +31,4 @@ A simple mobile app that lets anyone to use Alipay and WeChat pay in China for p
 - Add an original logo for the app
 - Allow user to see current credit
 - Record each login attempts
-- Add in topup history to the transactions screen
 

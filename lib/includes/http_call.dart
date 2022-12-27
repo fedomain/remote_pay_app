@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
 import 'package:deep_pick/deep_pick.dart';
+import 'package:remote_pay_app/models/topup.dart';
 
 import 'package:remote_pay_app/models/transaction.dart';
 
@@ -107,7 +108,7 @@ class HttpCall {
   }
 
   Future<bool> topup(String amount, String userid) async {
-    var uri = Uri.parse('$host/topup');
+    var uri = Uri.parse('$host/topupCredit');
     //var headers = {HttpHeaders.authorizationHeader: 'whatever'};
 
     Map<String, String> body = {
@@ -125,5 +126,35 @@ class HttpCall {
     }
 
     return false;
+  }
+
+  Future<List<TopUp>> getUserTopUps(userid) async {
+    var uri = Uri.parse('$host/topups');
+
+    Map<String, String> body = {
+      "userid": userid
+    };
+    
+    var httpResponse = await http.post(uri, body: body);
+    var jsonResponse = jsonDecode(httpResponse.body);
+
+    final bool success = pick(jsonResponse, 'success').asBoolOrThrow();
+
+    if (httpResponse.statusCode == 200 && success) {
+      List<TopUp> topups = [];
+      final List<dynamic> topupsData = jsonResponse['result'] as List<dynamic>;
+      
+      print(topupsData);
+
+      try {
+        topups = topupsData.map((transactionData) => TopUp.fromJson(transactionData)).toList();
+      } catch(e) {
+        print(e);
+      }
+
+      return topups;
+    } else {
+      throw Exception('Failed to get top ups');
+    }
   }
 }

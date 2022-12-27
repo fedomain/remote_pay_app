@@ -115,10 +115,10 @@ class DisplayPictureScreen extends StatelessWidget {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(100, 10),
+                  fixedSize: const Size(120, 10),
                 ),
                 child: Text(
-                  'Cancel',
+                  'Try Again',
                   style: TextStyle(fontSize: 16),
                 ),
                 onPressed: () {
@@ -128,9 +128,12 @@ class DisplayPictureScreen extends StatelessWidget {
               SizedBox(width: 10),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(100, 10),
+                  fixedSize: const Size(120, 10),
                 ),
-                child: Text('OK'),
+                child: Text(
+                  'Use Photo',
+                  style: TextStyle(fontSize: 16),
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,

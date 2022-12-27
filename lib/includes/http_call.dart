@@ -105,4 +105,25 @@ class HttpCall {
 
     return false;
   }
+
+  Future<bool> topup(String amount, String userid) async {
+    var uri = Uri.parse('$host/topup');
+    //var headers = {HttpHeaders.authorizationHeader: 'whatever'};
+
+    Map<String, String> body = {
+      "amount": amount,
+      "userid": userid
+    };
+
+    var httpResponse = await http.post(uri, body: body);
+    var jsonResponse = jsonDecode(httpResponse.body);
+
+    final bool success = pick(jsonResponse, 'success').asBoolOrThrow();
+
+    if (httpResponse.statusCode == 200 && success) {
+      return true;
+    }
+
+    return false;
+  }
 }

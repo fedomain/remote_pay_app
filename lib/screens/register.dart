@@ -48,7 +48,6 @@ class _RegisterFormState extends State<RegisterForm> {
       bool success = await widget.httpCall.register(_firstnameController.text, _lastnameController.text, _emailController.text, _usernameController.text, _passwordController.text);
 
       if (success) {
-
         Navigator.push(
           context!,
           MaterialPageRoute(

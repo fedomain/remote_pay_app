@@ -16,6 +16,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var myAppBar = getAppBar(context, camera, userid);
 
+    const double fontSize = 16;
+    const double sizedBoxHeight = 10;
+
     return Scaffold(
       appBar: myAppBar,
       body: GridView.count(
@@ -42,10 +45,14 @@ class HomePage extends StatelessWidget {
                     size: 50,
                     color: Colors.blue,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: sizedBoxHeight),
                   Text(
-                    'Scan QR code',
-                    style: TextStyle(fontSize: 16),
+                    'Scan Vendor',
+                    style: TextStyle(fontSize: fontSize),
+                  ),
+                  Text(
+                    'QR code',
+                    style: TextStyle(fontSize: fontSize),
                   ),
                 ],
               )
@@ -70,10 +77,10 @@ class HomePage extends StatelessWidget {
                     size: 50,
                     color: Colors.blue,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: sizedBoxHeight),
                   Text(
-                    'Top Up',
-                    style: TextStyle(fontSize: 16),
+                    'Top Up Credit',
+                    style: TextStyle(fontSize: fontSize),
                   ),
                 ],
               )
@@ -98,10 +105,14 @@ class HomePage extends StatelessWidget {
                     size: 50,
                     color: Colors.blue,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: sizedBoxHeight),
                   Text(
-                    'Transactions',
-                    style: TextStyle(fontSize: 16),
+                    'Transaction',
+                    style: TextStyle(fontSize: fontSize),
+                  ),
+                  Text(
+                    'History',
+                    style: TextStyle(fontSize: fontSize),
                   ),
                 ],
               )

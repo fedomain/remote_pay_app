@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remote_pay_app/screens/home.dart';
+import 'package:remote_pay_app/screens/profile.dart';
 
 AppBar getAppBar(context, camera, userid) {
   return AppBar(

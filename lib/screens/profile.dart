@@ -2,37 +2,39 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:remote_pay_app/includes/http_call.dart';
-import 'package:remote_pay_app/screens/login.dart';
+import 'package:remote_pay_app/screens/home.dart';
 import 'package:remote_pay_app/screens/error.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key, required this.camera}) : super(key: key);
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({Key? key, required this.camera, required this.userid}) : super(key: key);
 
+  final String userid;
   final CameraDescription camera;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('RemotePay'),
+        title: const Text('RemotePay'),
         centerTitle: true,
       ),
-      body: RegisterForm(httpCall: HttpCall(), camera: camera),
+      body: ProfileForm(httpCall: HttpCall(), camera: camera, userid: userid),
     );
   }
 }
 
-class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key, required this.httpCall, required this.camera}) : super(key: key);
+class ProfileForm extends StatefulWidget {
+  const ProfileForm({Key? key, required this.httpCall, required this.camera, required this.userid}) : super(key: key);
 
+  final String userid;
   final HttpCall httpCall;
   final CameraDescription camera;
 
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  _ProfileFormState createState() => _ProfileFormState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class _ProfileFormState extends State<ProfileForm> {
   bool _success = false;
 
   final _formKey = GlobalKey<FormState>();
@@ -51,7 +53,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Navigator.push(
           context!,
           MaterialPageRoute(
-            builder: (context) => LoginPage(camera: widget.camera, justRegistered: true),
+            builder: (context) => HomePage(camera: widget.camera, userid: widget.userid),
           )
         );
       } else {
@@ -72,6 +74,8 @@ class _RegisterFormState extends State<RegisterForm> {
     setState(() {
       _success = false;
     });
+
+    _firstnameController.text = 'whatever';
   }
 
   @override
@@ -96,7 +100,7 @@ class _RegisterFormState extends State<RegisterForm> {
           children: <Widget>[
             const SizedBox(height: 20.0),
             const Text(
-              'Registration',
+              'Edit Profile',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20.0),
@@ -111,7 +115,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'First Name',
               ),
               validator: (String? value) {
-                return (value ==null || value.isEmpty) ? 'Please enter your first name.' : null;
+                return (value == null || value.isEmpty) ? 'Please enter your first name.' : null;
               },
             ),
             // spacer
@@ -126,7 +130,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'Last Name',
               ),
               validator: (String? value) {
-                return (value ==null || value.isEmpty) ? 'Please enter your last name.' : null;
+                return (value == null || value.isEmpty) ? 'Please enter your last name.' : null;
               },
             ),
             // spacer
@@ -141,7 +145,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'Email Address',
               ),
               validator: (String? value) {
-                return (value ==null || value.isEmpty) ? 'Please enter your email address.' : null;
+                return (value == null || value.isEmpty) ? 'Please enter your email address.' : null;
               },
             ),
             // spacer
@@ -156,7 +160,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'Username',
               ),
               validator: (String? value) {
-                return (value ==null || value.isEmpty) ? 'Please enter your username.' : null;
+                return (value == null || value.isEmpty) ? 'Please enter your username.' : null;
               },
             ),
             // spacer

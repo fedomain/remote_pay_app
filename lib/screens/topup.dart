@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:deep_pick/deep_pick.dart';
 
 import 'package:remote_pay_app/includes/appbar.dart';
 import 'package:remote_pay_app/includes/http_call.dart';

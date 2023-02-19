@@ -5,7 +5,7 @@ import 'package:remote_pay_app/includes/appbar.dart';
 import 'package:remote_pay_app/includes/http_call.dart';
 import 'package:remote_pay_app/screens/error.dart';
 import 'package:remote_pay_app/screens/home.dart';
-
+import 'package:flutter_braintree/flutter_braintree.dart';
 
 class TopUpPage extends StatelessWidget {
   const TopUpPage({Key? key, required this.camera, required this.userid}) : super(key: key);
@@ -41,9 +41,31 @@ class _TopUpFormState extends State<TopUpForm> {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
 
-  void _onFormSubmit({BuildContext? context}) async {
+  static const String tokenizationKey = 'sandbox_hc5tvcty_qqs7pr8w92yy2vyg';
+
+  void showNonce(BraintreePaymentMethodNonce nonce) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Payment method nonce:'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text('Nonce: ${nonce.nonce}'),
+            const SizedBox(height: 16),
+            Text('Type label: ${nonce.typeLabel}'),
+            const SizedBox(height: 16),
+            Text('Description: ${nonce.description}'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _onFormSubmit({BuildContext? context, required String nonce}) async {
     if (_formKey.currentState!.validate()) {
-      bool success = await widget.httpCall.topup(_amountController.text, widget.userid);
+      bool success = await widget.httpCall.topup(_amountController.text, widget.userid, nonce);
 
       if (success) {
         Navigator.push(
@@ -110,8 +132,23 @@ class _TopUpFormState extends State<TopUpForm> {
                 ),
                 ElevatedButton(
                   child: Text('Top Up'),
-                  onPressed: () {
-                    _onFormSubmit(context: context);
+                  onPressed: () async {
+                    var request = BraintreeDropInRequest(
+                      tokenizationKey: tokenizationKey,
+                      collectDeviceData: true,
+                      cardEnabled: true,
+                      paypalRequest: BraintreePayPalRequest(
+                        amount: _amountController.text,
+                        displayName: 'Example company',
+                      ),
+                    );
+
+                    final result = await BraintreeDropIn.start(request);
+
+                    if (result != null) {
+                      //showNonce(result);
+                      _onFormSubmit(context: context, nonce: result.paymentMethodNonce.nonce);
+                    }
                   },
                 ),
               ],

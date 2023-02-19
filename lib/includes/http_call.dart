@@ -107,21 +107,24 @@ class HttpCall {
     return false;
   }
 
-  Future<bool> topup(String amount, String userid) async {
-    var uri = Uri.parse('$host/topupCredit');
+  Future<bool> topup(String amount, String userid, String nonce) async {
+    var uri = Uri.parse('$host/payment');
+
+    //var uri = Uri.parse('$host/topupCredit');
     //var headers = {HttpHeaders.authorizationHeader: 'whatever'};
 
     Map<String, String> body = {
       "amount": amount,
-      "userid": userid
+      "userid": userid,
+      "paymentMethodNonce": nonce,
     };
 
     var httpResponse = await http.post(uri, body: body);
     var jsonResponse = jsonDecode(httpResponse.body);
 
-    final bool success = pick(jsonResponse, 'success').asBoolOrThrow();
+    //final bool success = pick(jsonResponse, 'success').asBoolOrThrow();
 
-    if (httpResponse.statusCode == 200 && success) {
+    if (httpResponse.statusCode == 200) {
       return true;
     }
 
